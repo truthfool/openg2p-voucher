@@ -10,7 +10,7 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
 
 
     fun createProgram(voucherProgram: VoucherProgram) {
-        voucherProgramRepository.save(voucherProgram)
+        voucherProgramRepository.save(voucherProgram);
     }
 
     fun getAllPrograms(): List<VoucherProgram> {

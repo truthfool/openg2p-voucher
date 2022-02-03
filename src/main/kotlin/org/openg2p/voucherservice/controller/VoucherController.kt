@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono
 
 
 @RestController
-@RequestMapping("/voucher")
+@RequestMapping("/api/v1")
 class VoucherController constructor(private val voucherService: VoucherService) {
 
     @PostMapping("/program")

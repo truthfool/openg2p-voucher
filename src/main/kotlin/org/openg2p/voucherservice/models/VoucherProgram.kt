@@ -11,8 +11,7 @@ data class VoucherProgram(
     var voucherProgramName           : String,
     var voucherProgramStartDate      : LocalDate,
     var voucherProgramExpirationDate : LocalDate,
-    var voucherCount                : Int,
-    var voucherRedemptionQuantity   : Int,
+    var voucherCount                 : Int,
     var voucherProgramActive         : Boolean,
 
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "program")

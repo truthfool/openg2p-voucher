@@ -8,11 +8,11 @@ data class Voucher(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var voucherId          : Long,
-    var voucherCode        : String,
-    var programName        : String,
+    var voucherCode        : String?,
     var redemptionQuantity : Int,
+    var voucherType : String,
     @ManyToOne
-    val program: VoucherProgram,
+    val program: VoucherProgram?,
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "voucher")
     val discount: List<VoucherDiscount>?
 )
