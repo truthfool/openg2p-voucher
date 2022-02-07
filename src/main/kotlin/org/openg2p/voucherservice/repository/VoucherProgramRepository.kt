@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 
 @Repository
-interface VoucherProgramRepository : JpaRepository<VoucherProgram,Long>
+interface VoucherProgramRepository : JpaRepository<VoucherProgram,Int>
 {
 }

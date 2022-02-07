@@ -2,11 +2,11 @@ package org.openg2p.voucherservice.controller
 
 import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.service.VoucherService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
+import javax.validation.Valid
 
 
 @RestController
@@ -14,9 +14,10 @@ import reactor.core.publisher.Mono
 class VoucherController constructor(private val voucherService: VoucherService) {
 
     @PostMapping("/program")
-    fun createProgram(@RequestBody voucherProgram: VoucherProgram):Mono<ResponseEntity<String>> {
-        voucherService.createProgram(voucherProgram);
-        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
+    fun createProgram(@Valid @RequestBody payload:Map<String, Any>): Mono<ResponseEntity<String>> {
+        println("Create Program");
+        voucherService.createProgram(payload);
+        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED));
     }
 
     @GetMapping("/program")

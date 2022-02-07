@@ -1,5 +1,7 @@
 package org.openg2p.voucherservice.models
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 import javax.persistence.*
 
 
@@ -9,10 +11,13 @@ data class Voucher(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var voucherId          : Long,
     var voucherCode        : String?,
+    @SerializedName("redemptionQuantity")
     var redemptionQuantity : Int,
+    @SerializedName("voucherType")
     var voucherType : String,
     @ManyToOne
     val program: VoucherProgram?,
+    @SerializedName("discount")
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "voucher")
     val discount: List<VoucherDiscount>?
 )
