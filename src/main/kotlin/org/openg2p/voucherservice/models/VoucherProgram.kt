@@ -3,7 +3,6 @@ package org.openg2p.voucherservice.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -14,9 +13,9 @@ data class VoucherProgram(
     @SerializedName("voucherProgramName")
     var voucherProgramName           : String,
     @SerializedName("voucherProgramStartDate")
-    var voucherProgramStartDate      : SimpleDateFormat,
+    var voucherProgramStartDate      : String,
     @SerializedName("voucherProgramExpirationDate")
-    var voucherProgramExpirationDate : SimpleDateFormat,
+    var voucherProgramExpirationDate : String,
     @SerializedName("voucherCount")
     var voucherCount                 : Int,
     @SerializedName("voucherProgramActive")

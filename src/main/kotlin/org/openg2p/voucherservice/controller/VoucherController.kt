@@ -3,29 +3,37 @@ package org.openg2p.voucherservice.controller
 import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.service.VoucherService
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
+import java.util.*
 import javax.validation.Valid
 
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1", produces = [MediaType.APPLICATION_JSON_VALUE])
 class VoucherController constructor(private val voucherService: VoucherService) {
 
     @PostMapping("/program")
-    fun createProgram(@Valid @RequestBody payload:Map<String, Any>): Mono<ResponseEntity<String>> {
-        println("Create Program");
-        voucherService.createProgram(payload);
-        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED));
+    fun createProgram(@RequestBody payload:Map<String, Any>): Mono<ResponseEntity<String>> {
+        voucherService.createProgram(payload)
+        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
     }
 
     @GetMapping("/program")
     fun getAllPrograms(): List<VoucherProgram>
     {
-        return voucherService.getAllPrograms();
+        return voucherService.getAllPrograms()
     }
-
+    @DeleteMapping("/{id}")
+    fun deleteVoucher(@PathVariable id: Int?): String {
+        return voucherService.deleteById(id)
+    }
+    @GetMapping("/{id}")
+    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
+        return voucherService.getProgramById(id);
+    }
 //    @PostMapping
 //    fun createVoucher(@RequestBody voucher: Voucher?): Mono<Voucher?>? {
 //        return voucherService.save(voucher)
@@ -35,10 +43,7 @@ class VoucherController constructor(private val voucherService: VoucherService) 
 //        return voucherService?.findAllVouchers()
 //    }
 //
-//    @GetMapping("/{id}")
-//    fun getVoucher(@PathVariable id: Int?): Mono<Voucher?>? {
-//        return voucherService?.findByVoucherId(id)
-//    }
+
 //
 //
 //    @PutMapping("/{id}")
@@ -50,8 +55,5 @@ class VoucherController constructor(private val voucherService: VoucherService) 
 //            }.flatMap { c -> repository.save(c) }
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    fun deleteVoucher(@PathVariable id: Int?): Mono<Void?>? {
-//        return voucherService.deleteById(id)
-//    }
+
 }

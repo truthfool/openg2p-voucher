@@ -8,7 +8,7 @@ import javax.persistence.*
 data class VoucherDiscount (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var voucherDiscountId         : Long,
+    var voucherDiscountId         : Int,
     @SerializedName("voucherDiscountType")
     var voucherDiscountType       : String,
     @SerializedName("voucherDiscountPercentOff")
