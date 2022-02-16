@@ -30,10 +30,10 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     fun deleteVoucher(@PathVariable id: Int?): String {
         return voucherService.deleteById(id)
     }
-    @GetMapping("/{id}")
-    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
-        return voucherService.getProgramById(id);
-    }
+//    @GetMapping("/{id}")
+//    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
+//        return voucherService.getProgramById(id);
+//    }
 //    @PostMapping
 //    fun createVoucher(@RequestBody voucher: Voucher?): Mono<Voucher?>? {
 //        return voucherService.save(voucher)

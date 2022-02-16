@@ -1,14 +1,13 @@
 package org.openg2p.voucherservice.service
 
-import org.openg2p.voucherservice.models.Voucher
 import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.repository.VoucherDiscountRepository
 import org.openg2p.voucherservice.repository.VoucherProgramRepository
 import org.openg2p.voucherservice.repository.VoucherRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
+import org.json.JSONObject
+import org.openg2p.voucherservice.models.Voucher
 import java.util.*
 
 @Service
@@ -16,8 +15,22 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
                      var voucherDiscountRepository: VoucherDiscountRepository,
                      var voucherRepository: VoucherRepository) {
 
+    // Generating voucher code
+    fun getVoucherCode(programName:String):String
+    {
+        var alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"+ "0123456789"+ "abcdefghijklmnopqrstuvxyz";
+        var s=programName.slice(0..4);
+        for (i in 1..12) {
+            var index=((alphaNumeric.length* Math.random()).toInt());
+            s+=(alphaNumeric.get(index));
+        }
+        return s;
+    }
+    fun getDiscountDetails():List<>
+    {
+
+    }
     fun createProgram(payload: Map<String, Any>) {
-        println("Creating Program");
         println(payload)
         val programId= payload["programId"] as Int;
         val voucherProgramName= payload["voucherProgramName"] as String;
@@ -25,34 +38,31 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         val voucherProgramActive= payload["voucherProgramActive"] as Boolean;
         val voucherProgramStartDate= payload["voucherProgramStartDate"] as String;
         val voucherProgramExpirationDate= payload["voucherProgramExpirationDate"] as String;
-        val voucherPayload=payload["voucher"];
-        val items = payload.getJSONArray("voucher")
-        items.forEachString { item ->
-            // use item
+
+        val jsonObject = JSONObject(payload)
+        val vouchersAll = jsonObject.optJSONArray("voucher")
+        println(vouchersAll)
+
+        val listOfVouchers:List<Voucher> = emptyList()
+        for (i in 0 until vouchersAll.length()) {
+            val item = vouchersAll.getJSONObject(i)
+            val voucherType=item.optString("voucherType")
+            val redemptionQuantity=item.optInt("redemptionQuantity")
+
+//            listOfVouchers.add()
         }
-        println(voucherPayload)
-        for (v in voucherPayload)
-        {
-            println(v);
-        }
+
 //        val program=VoucherProgram();
 //        voucherProgramRepository.save(program);
-//        println("Program created");
-//        val voucherPayload= payload["voucher"] as List<Voucher>?
-//        if (voucherPayload != null) {
-//            for (v in voucherPayload)
-//            {
-//                println(v);
-//            }
-//        }
+        println("Program created");
     }
 
     fun getAllPrograms(): List<VoucherProgram> {
         return voucherProgramRepository.findAll();
     }
-    fun getProgramById(id: Int?): Optional<VoucherProgram> {
-        return voucherProgramRepository.findById(id);
-    }
+//    fun getProgramById(id: Int?): Optional<VoucherProgram> {
+//        return voucherProgramRepository.findById(id);
+//    }
 
     fun deleteById(id: Int?): String {
         return if (id != null) {

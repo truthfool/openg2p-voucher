@@ -1,6 +1,5 @@
 package org.openg2p.voucherservice.models
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.gson.annotations.SerializedName
 import javax.persistence.*
 
