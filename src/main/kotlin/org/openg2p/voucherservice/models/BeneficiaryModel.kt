@@ -5,7 +5,7 @@ import javax.persistence.*
 @Entity
 data class BeneficiaryModel(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val beneficiaryId:Long,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id:Int,
     val beneficiaryName:String,
 )

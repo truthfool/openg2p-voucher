@@ -6,8 +6,8 @@ import javax.persistence.*
 @Entity
 data class VoucherProgram(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var programId                    : Int,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id                    : Int,
     @SerializedName("voucherProgramName")
     var voucherProgramName           : String,
     @SerializedName("voucherProgramStartDate")
