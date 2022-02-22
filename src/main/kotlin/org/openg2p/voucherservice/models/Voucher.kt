@@ -8,16 +8,13 @@ import javax.persistence.*
 data class Voucher(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id          : Int,
+    var id                 : Int,
     var voucherCode        : String?,
-    @SerializedName("redemptionQuantity")
+    @SerializedName("redemption_quantity")
     var redemptionQuantity : Int,
-    @SerializedName("voucherType")
+    @SerializedName("voucher_type")
     var voucherType : String,
     @ManyToOne
     val program: VoucherProgram?,
-    @SerializedName("discount")
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "voucher")
-    val discount: List<VoucherDiscount>?
 )
 

@@ -8,20 +8,13 @@ data class VoucherProgram(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id                    : Int,
-    @SerializedName("voucherProgramName")
+    @SerializedName("program_name")
     var voucherProgramName           : String,
-    @SerializedName("voucherProgramStartDate")
+    @SerializedName("program_start_date")
     var voucherProgramStartDate      : String,
-    @SerializedName("voucherProgramExpirationDate")
+    @SerializedName("program_expiration_date")
     var voucherProgramExpirationDate : String,
-    @SerializedName("voucherCount")
-    var voucherCount                 : Int,
-    @SerializedName("voucherProgramActive")
+    @SerializedName("program_active")
     var voucherProgramActive         : Boolean,
-
-    @SerializedName("voucher")
-    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "program")
-    var voucher: List<Voucher>?
-
 )
 

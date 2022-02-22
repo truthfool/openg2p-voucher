@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import java.util.*
-import javax.validation.Valid
 
 
 @RestController
@@ -16,8 +15,8 @@ import javax.validation.Valid
 class VoucherController constructor(private val voucherService: VoucherService) {
 
     @PostMapping("/program")
-    fun createProgram(@RequestBody payload:Map<String, Any>): Mono<ResponseEntity<String>> {
-        voucherService.createProgram(payload)
+    fun createProgram(@RequestBody voucherProgram: VoucherProgram): Mono<ResponseEntity<String>> {
+        voucherService.createProgram(voucherProgram)
         return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
     }
 
@@ -26,14 +25,19 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     {
         return voucherService.getAllPrograms()
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/program/{id}")
     fun deleteVoucher(@PathVariable id: Int?): String {
-        return voucherService.deleteById(id)
+        return voucherService.deleteProgramById(id);
     }
-//    @GetMapping("/{id}")
-//    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
-//        return voucherService.getProgramById(id);
-//    }
+    @GetMapping("/program/{id}")
+    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
+        return voucherService.getProgramById(id);
+    }
+
+    @GetMapping("/program/{program_name}")
+    fun getProgramDetails(@PathVariable program_name: String?): Optional<VoucherProgram> {
+        return voucherService.getProgramByName(program_name);
+    }
 //    @PostMapping
 //    fun createVoucher(@RequestBody voucher: Voucher?): Mono<Voucher?>? {
 //        return voucherService.save(voucher)
