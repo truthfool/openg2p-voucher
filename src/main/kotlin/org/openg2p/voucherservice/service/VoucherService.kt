@@ -1,6 +1,7 @@
 package org.openg2p.voucherservice.service
 
 import org.json.JSONArray
+import org.openg2p.voucherservice.models.Voucher
 import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.repository.VoucherDiscountRepository
 import org.openg2p.voucherservice.repository.VoucherProgramRepository
@@ -26,7 +27,6 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         }
         return s;
     }
-
     //Creating Programs for vouchers
     fun createProgram(voucherProgram: VoucherProgram) {
         voucherProgramRepository.save(voucherProgram)
@@ -35,11 +35,6 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
     fun getAllPrograms(): List<VoucherProgram> {
         return voucherProgramRepository.findAll();
     }
-    //Getting Program by id
-    fun getProgramById(id: Int?): Optional<VoucherProgram> {
-        return voucherProgramRepository.findById(id);
-    }
-
     //Deleting Program by id
     fun deleteProgramById(id: Int?): String {
         return if (id != null) {
@@ -49,11 +44,30 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
             "No Program with such id exits";
         }
     }
+    //Get Program By Id
+    fun getProgramById(id: Int?): Optional<VoucherProgram> {
+        return voucherProgramRepository.findById(id);
+    }
+
+    //Create Voucher
+    fun createVoucher(voucher: Voucher) {
+        voucherRepository.save(voucher)
+    }
+    //Updating Program Details
+//    fun updateProgram(id: Int?,voucherProgram: VoucherProgram): VoucherProgram {
+//        VoucherProgram program = voucherProgramRepository.findById(id);
+//
+//        if(program!=null)
+//        {
+//            program.set
+//        }
+//    }
 
     //Getting program details by program name
-    fun getProgramByName(programName: String?): Optional<VoucherProgram> {
-        return voucherProgramRepository.findByProgramName(programName);
-    }
+//    fun getProgramByName(programName: String?): Optional<VoucherProgram> {
+//        return voucherProgramRepository.findByProgramName(programName);
+//    }
+
 
 
 }

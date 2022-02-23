@@ -8,9 +8,7 @@ data class VoucherDiscount (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id         : Int,
-    @SerializedName("voucherDiscountType")
     var voucherDiscountType       : String,
-    @SerializedName("voucherDiscountPercentOff")
     var voucherDiscountPercentOff : Long,
     @ManyToOne
     var voucher: Voucher

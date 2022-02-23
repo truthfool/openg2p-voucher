@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository
 @Repository
 interface VoucherProgramRepository : JpaRepository<VoucherProgram,Int>
 {
-    abstract fun findByProgramName(programName: String?): Optional<VoucherProgram>
 }
