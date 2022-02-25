@@ -33,11 +33,11 @@ class VoucherController constructor(private val voucherService: VoucherService) 
         return voucherService.deleteProgramById(id);
     }
     //Getting Program By Id
-    @GetMapping("/program/{id}")
-    fun getProgramById(@PathVariable id:Int?): Optional<VoucherProgram>
-    {
-        return voucherService.getProgramById(id);
-    }
+//    @GetMapping("/program/{id}")
+//    fun getProgramById(@PathVariable id:Int?): Optional<VoucherProgram>
+//    {
+//        return voucherService.getProgramById(id);
+//    }
     // Updating Program Details
 //    @PutMapping("/program/{id}")
 //    fun updateProgram(@PathVariable id:Int?,@RequestBody voucherProgram: VoucherProgram):VoucherProgram
@@ -61,10 +61,16 @@ class VoucherController constructor(private val voucherService: VoucherService) 
 //                c
 //            }.flatMap { c -> repository.save(c) }
 //    }
+    //Add Vouchers
     @PostMapping("/voucher")
     fun createVoucher(@RequestBody voucher: Voucher):Mono<ResponseEntity<String>>{
         voucherService.createVoucher(voucher)
         return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
     }
-
+    //Get all vouchers
+    @GetMapping("/voucher")
+    fun getAllVouchers(): List<Voucher>
+    {
+        return voucherService.getAllVouchers()
+    }
 }

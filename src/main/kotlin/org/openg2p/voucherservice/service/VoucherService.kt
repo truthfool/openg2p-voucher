@@ -9,6 +9,8 @@ import org.openg2p.voucherservice.repository.VoucherRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.openg2p.voucherservice.models.VoucherDiscount
+import org.springframework.http.ResponseEntity
+import reactor.core.publisher.Mono
 import java.util.*
 
 @Service
@@ -45,13 +47,17 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         }
     }
     //Get Program By Id
-    fun getProgramById(id: Int?): Optional<VoucherProgram> {
-        return voucherProgramRepository.findById(id);
-    }
+//    fun getProgramById(id: Int?): Optional<VoucherProgram> {
+//        return voucherProgramRepository.findById(id);
+//    }
 
     //Create Voucher
     fun createVoucher(voucher: Voucher) {
         voucherRepository.save(voucher)
+    }
+
+    fun getAllVouchers(): List<Voucher> {
+        return voucherRepository.findAll()
     }
     //Updating Program Details
 //    fun updateProgram(id: Int?,voucherProgram: VoucherProgram): VoucherProgram {
