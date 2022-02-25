@@ -32,39 +32,16 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     fun deleteVoucher(@PathVariable id: Int?): String {
         return voucherService.deleteProgramById(id);
     }
-    //Getting Program By Id
-    @GetMapping("/program/{id}")
-    fun getProgramById(@PathVariable id:Int?): Optional<VoucherProgram>
-    {
-        return voucherService.getProgramById(id);
-    }
-    // Updating Program Details
-//    @PutMapping("/program/{id}")
-//    fun updateProgram(@PathVariable id:Int?,@RequestBody voucherProgram: VoucherProgram):VoucherProgram
-//    {
-//        return voucherService.updateProgram(id);
-//    }
-//    @GetMapping("/program/{id}")
-//    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
-//        return voucherService.getProgramById(id);
-//    }
-
-//    @GetMapping("/program/{program_name}")
-//    fun getProgramDetails(@PathVariable program_name: String?): Optional<VoucherProgram> {
-//        return voucherService.getProgramByName(program_name);
-//    }
-//    @PutMapping("/{id}")
-//    fun updateVoucher(@RequestBody voucher: Voucher, @PathVariable id: Int?): Mono<Voucher?>? {
-//        return voucherService.findById(id)
-//            .map { c ->
-//                c.setName(voucher.getName())
-//                c
-//            }.flatMap { c -> repository.save(c) }
-//    }
+    //Creating a voucher
     @PostMapping("/voucher")
     fun createVoucher(@RequestBody voucher: Voucher):Mono<ResponseEntity<String>>{
         voucherService.createVoucher(voucher)
-        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
+        return Mono.just(ResponseEntity("Voucher Created Successfully!", HttpStatus.CREATED))
     }
-
+    //Get all vouchers
+    @GetMapping("/voucher")
+    fun getAllVouchers():List<Voucher>
+    {
+        return voucherService.getAllVouchers()
+    }
 }

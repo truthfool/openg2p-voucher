@@ -15,7 +15,7 @@ data class Voucher(
     var voucherType        : String,
     var percentOff         : Long?,
     var amount             : BigInteger?,
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     val program            : VoucherProgram?,
 )
 

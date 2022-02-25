@@ -1,19 +1,14 @@
 package org.openg2p.voucherservice.service
 
-import org.json.JSONArray
 import org.openg2p.voucherservice.models.Voucher
 import org.openg2p.voucherservice.models.VoucherProgram
-import org.openg2p.voucherservice.repository.VoucherDiscountRepository
 import org.openg2p.voucherservice.repository.VoucherProgramRepository
 import org.openg2p.voucherservice.repository.VoucherRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.openg2p.voucherservice.models.VoucherDiscount
-import java.util.*
 
 @Service
 class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepository,
-                     var voucherDiscountRepository: VoucherDiscountRepository,
                      var voucherRepository: VoucherRepository) {
 
     // Generating voucher code
@@ -44,30 +39,13 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
             "No Program with such id exits";
         }
     }
-    //Get Program By Id
-    fun getProgramById(id: Int?): Optional<VoucherProgram> {
-        return voucherProgramRepository.findById(id);
-    }
-
     //Create Voucher
     fun createVoucher(voucher: Voucher) {
         voucherRepository.save(voucher)
     }
-    //Updating Program Details
-//    fun updateProgram(id: Int?,voucherProgram: VoucherProgram): VoucherProgram {
-//        VoucherProgram program = voucherProgramRepository.findById(id);
-//
-//        if(program!=null)
-//        {
-//            program.set
-//        }
-//    }
-
-    //Getting program details by program name
-//    fun getProgramByName(programName: String?): Optional<VoucherProgram> {
-//        return voucherProgramRepository.findByProgramName(programName);
-//    }
-
-
+    //Get All Vouchers
+    fun getAllVouchers(): List<Voucher> {
+        return voucherRepository.findAll()
+    }
 
 }
