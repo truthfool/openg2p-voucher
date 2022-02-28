@@ -1,22 +1,16 @@
 package org.openg2p.voucherservice.service
 
-import org.json.JSONArray
-import org.openg2p.voucherservice.models.Voucher
+import org.openg2p.voucherservice.models.DiscountVoucher
+import org.openg2p.voucherservice.models.GiftVoucher
 import org.openg2p.voucherservice.models.VoucherProgram
-import org.openg2p.voucherservice.repository.VoucherDiscountRepository
-import org.openg2p.voucherservice.repository.VoucherProgramRepository
-import org.openg2p.voucherservice.repository.VoucherRepository
+import org.openg2p.voucherservice.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import org.openg2p.voucherservice.models.VoucherDiscount
-import org.springframework.http.ResponseEntity
-import reactor.core.publisher.Mono
-import java.util.*
 
 @Service
 class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepository,
-                     var voucherDiscountRepository: VoucherDiscountRepository,
-                     var voucherRepository: VoucherRepository) {
+                                var discountVoucherRepository: DiscountVoucherRepository,
+                                var giftVoucherRepository: GiftVoucherRepository) {
 
     // Generating voucher code
     fun getVoucherCode(programName:String):String
@@ -46,20 +40,30 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
             "No Program with such id exits";
         }
     }
-    //Get Program By Id
+    // Get all Discount Vouchers
+    fun getAllDiscountVouchers(): List<DiscountVoucher> {
+        return discountVoucherRepository.findAll()
+    }
+    //Create Discount Voucher
+    fun createDiscountVoucher(voucher: DiscountVoucher) {
+        discountVoucherRepository.save(voucher)
+    }
+    //Create Gift Voucher
+    fun createGiftVoucher(voucher: GiftVoucher) {
+        giftVoucherRepository.save(voucher)
+    }
+    //Get all Gift Vouchers
+    fun getAllGiftVouchers(): List<GiftVoucher> {
+        return giftVoucherRepository.findAll()
+    }
+
+
+//    Get Program By Id
 //    fun getProgramById(id: Int?): Optional<VoucherProgram> {
 //        return voucherProgramRepository.findById(id);
 //    }
 
-    //Create Voucher
-    fun createVoucher(voucher: Voucher) {
-        voucherRepository.save(voucher)
-    }
-
-    fun getAllVouchers(): List<Voucher> {
-        return voucherRepository.findAll()
-    }
-    //Updating Program Details
+//    Updating Program Details
 //    fun updateProgram(id: Int?,voucherProgram: VoucherProgram): VoucherProgram {
 //        VoucherProgram program = voucherProgramRepository.findById(id);
 //

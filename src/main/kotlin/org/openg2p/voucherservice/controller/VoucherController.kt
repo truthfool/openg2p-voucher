@@ -1,10 +1,10 @@
 package org.openg2p.voucherservice.controller
 
-import org.openg2p.voucherservice.models.Voucher
+import org.openg2p.voucherservice.models.DiscountVoucher
+import org.openg2p.voucherservice.models.GiftVoucher
 import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.service.VoucherService
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
@@ -61,16 +61,28 @@ class VoucherController constructor(private val voucherService: VoucherService) 
 //                c
 //            }.flatMap { c -> repository.save(c) }
 //    }
-    //Add Vouchers
-    @PostMapping("/voucher")
-    fun createVoucher(@RequestBody voucher: Voucher):Mono<ResponseEntity<String>>{
-        voucherService.createVoucher(voucher)
-        return Mono.just(ResponseEntity("Program Created Successfully!", HttpStatus.CREATED))
+    //Create discount Vouchers
+    @PostMapping("/voucher/discount")
+    fun createDiscountVoucher(@RequestBody voucher: DiscountVoucher):Mono<ResponseEntity<String>>{
+        voucherService.createDiscountVoucher(voucher)
+        return Mono.just(ResponseEntity("Voucher Created Successfully!", HttpStatus.CREATED))
     }
-    //Get all vouchers
-    @GetMapping("/voucher")
-    fun getAllVouchers(): List<Voucher>
+    //Get all discount vouchers
+    @GetMapping("/voucher/discount")
+    fun getAllDiscountVouchers(): List<DiscountVoucher>
     {
-        return voucherService.getAllVouchers()
+        return voucherService.getAllDiscountVouchers()
+    }
+    // Create gift voucher
+    @PostMapping("/voucher/gift")
+    fun createGiftVoucher(@RequestBody voucher: GiftVoucher):Mono<ResponseEntity<String>>{
+        voucherService.createGiftVoucher(voucher)
+        return Mono.just(ResponseEntity("Voucher Created Successfully!", HttpStatus.CREATED))
+    }
+    //Get all gift vouchers
+    @GetMapping("/voucher/gift")
+    fun getAllGiftVouchers(): List<GiftVoucher>
+    {
+        return voucherService.getAllGiftVouchers()
     }
 }
