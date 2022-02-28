@@ -6,6 +6,7 @@ import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import kotlin.reflect.typeOf
 
 @Service
 class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepository,
@@ -46,11 +47,27 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
     }
     //Create Discount Voucher
     fun createDiscountVoucher(voucher: DiscountVoucher) {
-        discountVoucherRepository.save(voucher)
+        var code=getVoucherCode(voucher.program!!.voucherProgramName)
+        var voucherObj=DiscountVoucher(
+            id=voucher.id,
+            percentOff=voucher.percentOff,
+            redemptionQuantity=voucher.redemptionQuantity,
+            voucherCode=code,
+            program=voucher.program
+        )
+        discountVoucherRepository.save(voucherObj)
     }
     //Create Gift Voucher
     fun createGiftVoucher(voucher: GiftVoucher) {
-        giftVoucherRepository.save(voucher)
+        var code=getVoucherCode(voucher.program!!.voucherProgramName)
+        var voucherObj=GiftVoucher(
+            id=voucher.id,
+            amount=voucher.amount,
+            redemptionQuantity=voucher.redemptionQuantity,
+            voucherCode=code,
+            program=voucher.program
+        )
+        giftVoucherRepository.save(voucherObj)
     }
     //Get all Gift Vouchers
     fun getAllGiftVouchers(): List<GiftVoucher> {
