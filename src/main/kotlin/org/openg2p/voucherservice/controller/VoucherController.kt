@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Mono
 import java.util.*
 
-
 @RestController
 @RequestMapping("/api/v1")
 class VoucherController constructor(private val voucherService: VoucherService) {
@@ -32,20 +31,16 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     fun deleteVoucher(@PathVariable id: Int?): String {
         return voucherService.deleteProgramById(id);
     }
-    //Getting Program By Id
+    //Updating Program Details
+//    @PutMapping("/program/{id}")
+//    fun updateProgram(@PathVariable id:Int?,@RequestBody voucherProgram: VoucherProgram) {
+//        return voucherService.updateProgram(id);
+//    }
+
+//    Getting Program By Id
 //    @GetMapping("/program/{id}")
 //    fun getProgramById(@PathVariable id:Int?): Optional<VoucherProgram>
 //    {
-//        return voucherService.getProgramById(id);
-//    }
-    // Updating Program Details
-//    @PutMapping("/program/{id}")
-//    fun updateProgram(@PathVariable id:Int?,@RequestBody voucherProgram: VoucherProgram):VoucherProgram
-//    {
-//        return voucherService.updateProgram(id);
-//    }
-//    @GetMapping("/program/{id}")
-//    fun getProgram(@PathVariable id: Int?): Optional<VoucherProgram> {
 //        return voucherService.getProgramById(id);
 //    }
 
@@ -85,4 +80,17 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     {
         return voucherService.getAllGiftVouchers()
     }
+    //Get voucher by voucher code
+    @GetMapping("/voucher/code/{voucher_code}")
+    fun getVoucherByCode(@PathVariable voucher_code:String): Any?
+    {
+        return voucherService.getVoucherByCode(voucher_code)
+    }
+    //Redeem voucher by code
+    @GetMapping("/voucher/redeem")
+    fun redeemVoucherByCode(@RequestBody redeem:Map<String,Any>): Any?
+    {
+        return voucherService.redeemVoucherByCode(redeem)
+    }
 }
+

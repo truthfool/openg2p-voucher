@@ -1,6 +1,5 @@
 package org.openg2p.voucherservice.models
 
-import com.google.gson.annotations.SerializedName
 import javax.persistence.*
 
 @Entity

@@ -6,7 +6,6 @@ import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import kotlin.reflect.typeOf
 
 @Service
 class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepository,
@@ -16,9 +15,10 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
     // Generating voucher code
     fun getVoucherCode(programName:String):String
     {
+        var programName = programName.filter { !it.isWhitespace() }
         var alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"+ "0123456789"+ "abcdefghijklmnopqrstuvxyz";
         var s=programName.slice(0..4);
-        for (i in 1..12) {
+        for (i in 1..11) {
             var index=((alphaNumeric.length* Math.random()).toInt());
             s+=(alphaNumeric.get(index));
         }
@@ -74,20 +74,53 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         return giftVoucherRepository.findAll()
     }
 
+    //Get voucher by Code
+    fun getVoucherByCode(voucherCode: String): Any? {
+        println("Hello")
+//        val discountVoucher = discountVoucherRepository.findByVoucherCode(voucherCode);
+        var giftVoucher = giftVoucherRepository.findByVoucherCode(voucherCode);
+//        println(discountVoucher)
+        println(giftVoucher)
+//        println(discountVoucher)
+//        if (giftVoucher!=null)
+//        {
+//            voucher=giftVoucherRepository.findByVoucherCode(voucherCode);
+//        }
+//        println("Hi")
+        return giftVoucher
+    }
 
-//    Get Program By Id
+    fun redeemVoucherByCode(redeem: Map<String, Any>): Any? {
+        var voucherCode=redeem.get("voucherCode").toString()
+        var redemptionQuantity:Int= redeem.get("redemptionQuantity") as Int
+        println(voucherCode)
+        println(redemptionQuantity)
+        var giftVoucher = giftVoucherRepository.findByVoucherCode(voucherCode);
+        println(giftVoucher)
+        giftVoucher.redemptionQuantity = giftVoucher.redemptionQuantity - redemptionQuantity;
+        println(giftVoucher)
+        giftVoucherRepository.save(giftVoucher)
+        return "Redeemed"
+    }
+
+    // Get program by id
 //    fun getProgramById(id: Int?): Optional<VoucherProgram> {
-//        return voucherProgramRepository.findById(id);
+//        return voucherProgramRepository.findById(id)
 //    }
 
 //    Updating Program Details
-//    fun updateProgram(id: Int?,voucherProgram: VoucherProgram): VoucherProgram {
-//        VoucherProgram program = voucherProgramRepository.findById(id);
-//
-//        if(program!=null)
-//        {
-//            program.set
-//        }
+//    fun updateProgram(id: Int?) {
+//    return if (voucherProgramRepository.findById(id)) {
+//        voucherProgramRepository.save(
+//            VoucherProgram(
+//                id = voucherProgram.id,
+//                voucherProgramName = voucherProgram.voucherProgramName,
+//                voucherProgramStartDate = voucherProgram.voucherProgramStartDate,
+//                voucherProgramExpirationDate = voucherProgram.voucherProgramExpirationDate,
+//                voucherProgramActive = voucherProgram.voucherProgramActive
+//            )
+//        )
+//    }
 //    }
 
     //Getting program details by program name
