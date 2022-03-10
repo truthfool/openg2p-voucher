@@ -6,6 +6,7 @@ import org.openg2p.voucherservice.models.VoucherProgram
 import org.openg2p.voucherservice.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.math.BigInteger
 
 @Service
 class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepository,
@@ -93,14 +94,16 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
     fun redeemVoucherByCode(redeem: Map<String, Any>): Any? {
         var voucherCode=redeem.get("voucherCode").toString()
         var redemptionQuantity:Int= redeem.get("redemptionQuantity") as Int
-        println(voucherCode)
-        println(redemptionQuantity)
+
         var giftVoucher = giftVoucherRepository.findByVoucherCode(voucherCode);
-        println(giftVoucher)
         giftVoucher.redemptionQuantity = giftVoucher.redemptionQuantity - redemptionQuantity;
-        println(giftVoucher)
+
+        var programName:String= giftVoucher.program!!.voucherProgramName
+        var amount: BigInteger = giftVoucher.amount
         giftVoucherRepository.save(giftVoucher)
-        return "Redeemed"
+
+        return mapOf("programName" to programName, "amount" to amount ,
+                        "redemptionQuantity" to redemptionQuantity)
     }
 
     // Get program by id
