@@ -56,6 +56,8 @@ class VoucherController constructor(private val voucherService: VoucherService) 
 //                c
 //            }.flatMap { c -> repository.save(c) }
 //    }
+
+    //Discount Vouchers
     //Create discount Vouchers
     @PostMapping("/voucher/discount")
     fun createDiscountVoucher(@RequestBody voucher: DiscountVoucher):Mono<ResponseEntity<String>>{
@@ -68,6 +70,20 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     {
         return voucherService.getAllDiscountVouchers()
     }
+    //Get discount voucher by voucher code
+    @GetMapping("/voucher/discount/{voucher_code}")
+    fun getDiscountVoucherByCode(@PathVariable voucher_code:String): Any?
+    {
+        return voucherService.getDiscountVoucherByCode(voucher_code)
+    }
+    //Redeem discount voucher by code
+    @GetMapping("/voucher/discount/redeem")
+    fun redeemDiscountVoucherByCode(@RequestBody redeem:Map<String,Any>): Any?
+    {
+        return voucherService.redeemDiscountVoucherByCode(redeem)
+    }
+
+    //Gift Vouchers
     // Create gift voucher
     @PostMapping("/voucher/gift")
     fun createGiftVoucher(@RequestBody voucher: GiftVoucher):Mono<ResponseEntity<String>>{
@@ -80,17 +96,17 @@ class VoucherController constructor(private val voucherService: VoucherService) 
     {
         return voucherService.getAllGiftVouchers()
     }
-    //Get voucher by voucher code
-    @GetMapping("/voucher/code/{voucher_code}")
-    fun getVoucherByCode(@PathVariable voucher_code:String): Any?
+    //Get gift voucher by voucher code
+    @GetMapping("/voucher/gift/{voucher_code}")
+    fun getGiftVoucherByCode(@PathVariable voucher_code:String): Any?
     {
-        return voucherService.getVoucherByCode(voucher_code)
+        return voucherService.getGiftVoucherByCode(voucher_code)
     }
-    //Redeem voucher by code
-    @GetMapping("/voucher/redeem")
-    fun redeemVoucherByCode(@RequestBody redeem:Map<String,Any>): Any?
+    //Redeem gift voucher by code
+    @GetMapping("/voucher/gift/redeem")
+    fun redeemGiftVoucherByCode(@RequestBody redeem:Map<String,Any>): Any?
     {
-        return voucherService.redeemVoucherByCode(redeem)
+        return voucherService.redeemGiftVoucherByCode(redeem)
     }
 }
 

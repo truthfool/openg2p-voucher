@@ -75,23 +75,35 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         return giftVoucherRepository.findAll()
     }
 
-    //Get voucher by Code
-    fun getVoucherByCode(voucherCode: String): Any? {
-        println("Hello")
-//        val discountVoucher = discountVoucherRepository.findByVoucherCode(voucherCode);
-        var giftVoucher = giftVoucherRepository.findByVoucherCode(voucherCode);
-//        println(discountVoucher)
-        println(giftVoucher)
-//        println(discountVoucher)
-//        if (giftVoucher!=null)
-//        {
-//            voucher=giftVoucherRepository.findByVoucherCode(voucherCode);
-//        }
-//        println("Hi")
-        return giftVoucher
+    //Get discount voucher details by Code
+    fun getDiscountVoucherByCode(voucherCode: String?): Any? {
+        try {
+
+            val discountVoucher = discountVoucherRepository.findByVoucherCode(voucherCode);
+            return discountVoucher
+        }
+        catch (exception:Exception)
+        {
+            println(exception)
+            return "No discount voucher with such code exists!"
+        }
+    }
+    //Get gift voucher details by Code
+    fun getGiftVoucherByCode(voucherCode: String): Any? {
+        try {
+
+            val giftVoucher= giftVoucherRepository.findByVoucherCode(voucherCode);
+            return giftVoucher
+        }
+        catch (exception:Exception)
+        {
+            println(exception)
+            return "No gift voucher with such code exists!"
+        }
     }
 
-    fun redeemVoucherByCode(redeem: Map<String, Any>): Any? {
+    //Redeem gift voucher by code
+    fun redeemGiftVoucherByCode(redeem: Map<String, Any>): Any? {
         var voucherCode=redeem.get("voucherCode").toString()
         var redemptionQuantity:Int= redeem.get("redemptionQuantity") as Int
 
@@ -105,6 +117,23 @@ class VoucherService(@Autowired var voucherProgramRepository: VoucherProgramRepo
         return mapOf("programName" to programName, "amount" to amount ,
                         "redemptionQuantity" to redemptionQuantity)
     }
+
+    //Redeem discount voucher by code
+    fun redeemDiscountVoucherByCode(redeem: Map<String, Any>): Any? {
+        var voucherCode=redeem.get("voucherCode").toString()
+        var redemptionQuantity:Int= redeem.get("redemptionQuantity") as Int
+
+        var discountVoucher = discountVoucherRepository.findByVoucherCode(voucherCode);
+        discountVoucher.redemptionQuantity = discountVoucher.redemptionQuantity - redemptionQuantity;
+
+        var programName:String= discountVoucher.program!!.voucherProgramName
+        var percentOff:Long=discountVoucher.percentOff
+        discountVoucherRepository.save(discountVoucher)
+
+        return mapOf("programName" to programName, "percentOff" to percentOff ,
+            "redemptionQuantity" to redemptionQuantity)
+    }
+
 
     // Get program by id
 //    fun getProgramById(id: Int?): Optional<VoucherProgram> {

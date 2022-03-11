@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository
 interface GiftVoucherRepository: JpaRepository<GiftVoucher, Int>
 {
     @Query(value = "select * from gift_voucher where voucher_code=?1",nativeQuery = true)
-    abstract fun findByVoucherCode(voucherCode: String): GiftVoucher
+    abstract fun findByVoucherCode(voucherCode: String?): GiftVoucher
 }
